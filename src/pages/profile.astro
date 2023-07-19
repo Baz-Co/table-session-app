@@ -1,0 +1,28 @@
+---
+import { getSession } from 'auth-astro/server';
+let session = await getSession(Astro.request)
+if (!session) return Astro.redirect("/login")
+
+import type { Session } from '@auth/core/types';
+import { Auth, SignOut } from 'auth-astro/components';
+
+import Layout from '../layouts/Layout.astro'
+---
+
+<Layout title="Table Session">
+	<div class="grid place-items-center h-screen max-w-screen-xl mx-auto">
+		<!-- <div>{JSON.stringify(data)}</div> -->
+        <Auth>
+			{(session: Session) => {
+			  if (session) {
+				return (
+				  <>
+					<p>Logged in as {session.user?.name}</p>
+					<SignOut class="btn">Sign Out</SignOut>
+				  </>
+				);
+			  }
+			}}
+		  </Auth>
+	</div>
+</Layout>

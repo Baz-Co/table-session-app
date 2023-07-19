@@ -9,7 +9,8 @@ export default defineConfig({
   integrations: [auth(), tailwind(), react()],
   output: 'server',
   redirects: {
-    '/tables': '/'
+    '/tables': '/',
+    '/create': '/tables/create'
   },
   adapter: node({
     mode: "standalone"

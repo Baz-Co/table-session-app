@@ -1,6 +1,5 @@
 ---
 import { getSession } from 'auth-astro/server';
-
 let session = await getSession(Astro.request)
 if (!session) return Astro.redirect("/login")
 
@@ -8,11 +7,15 @@ import type { Session } from '@auth/core/types';
 import { Auth, SignIn, SignOut } from 'auth-astro/components';
 
 import Layout from '../layouts/Layout.astro'
+import CreateTable from './tables/create.astro'
 
-const response = await fetch('http:localhost:8001/items').catch((err) => {
-	// console.log(err)
-	// throw err
-	return { json: () => { return [{ id: 1, name: "Table 1", activeTime: null, activeUser: null },
+let tables;
+try {
+	const response = await fetch('http://localhost:8001/items')
+	tables = await response.json()
+} catch (error) {
+	console.log(error)
+	tables = [{ id: 1, name: "Table 1", activeTime: null, activeUser: null },
 	{ id: 2, name: "Table 2", activeTime: null, activeUser: null },
 	{ id: 3, name: "Table 3", activeTime: null, activeUser: null },
 	{ id: 4, name: "Table 4", activeTime: null, activeUser: null },
@@ -29,38 +32,28 @@ const response = await fetch('http:localhost:8001/items').catch((err) => {
 	{ id: 15, name: "Table 15", activeTime: null, activeUser: null },
 	{ id: 16, name: "Table 16", activeTime: null, activeUser: null },
 	{ id: 17, name: "Table 17", activeTime: null, activeUser: null },
-	{ id: 18, name: "Table 18", activeTime: null, activeUser: null }]} }
-})
-const tables = await response.json()
+	{ id: 18, name: "Table 18", activeTime: null, activeUser: null }]
+}
 ---
 
 <Layout title="Table Session">
 	<div class="grid place-items-center h-screen max-w-screen-xl mx-auto">
 		<!-- <div>{JSON.stringify(data)}</div> -->
-		<Auth>
-			{(session: Session) => {
-			  if (session) {
-				return (
-				  <>
-					<p>Logged in as {session.user.name}</p>
-					<SignOut class="btn">Sign Out</SignOut>
-				  </>
-				);
-			  }
-			}}
-		  </Auth>
+		{tables.length === 0 && <CreateTable />}
 		<div class="grid grid-cols-3 items-center w-full">
 			{
-				tables.map((table) => (
+				tables.map((table) => { 
+					const activeTime = table.activeTime ? new Date(table.activeTime) : null
+					return (
 					<a
 						class="border flex flex-col items-center justify-center m-1 rounded-md h-32"
 						href={`/tables/${table.id}`}
 					>
 						<span class="text-2xl">{table.name}</span>
 						<span class="text-2xl">{table.activeUser}</span>
-						<span class="text-2xl">{table.activeTime}</span>
+						<span class="text-2xl">{activeTime?.toLocaleString()}</span>
 					</a>
-				))
+				)})
 			}
 		</div>
 	</div>

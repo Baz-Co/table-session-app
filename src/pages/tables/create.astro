@@ -1,0 +1,46 @@
+---
+import { getSession } from "auth-astro/server";
+let session = await getSession(Astro.request);
+if (!session) return Astro.redirect("/login");
+
+const errors = { name: "" }
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    const name = data.get("name");
+    const email = session.user?.email;
+    if (typeof name !== "string" || name.length < 1) {
+      errors.name += "Please enter a Table Name. ";
+    }
+    const hasErrors = Object.values(errors).some(msg => msg)
+    if (!hasErrors) {
+    //   await registerUser({name, email, password});
+    await fetch("http://localhost:8001/item", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, activeUser: email, activeTime: new Date() }),
+      });
+      return Astro.redirect("/tables");
+    }
+  } catch (error) {
+      if (error instanceof Error) {
+          console.error(error.message);
+        }
+    }
+}
+
+import "../../styles/base.css";
+---
+
+<div class="grid place-items-center h-screen max-w-screen-md mx-auto">
+    <form method="POST" class="w-full flex flex-col">
+        <label class="font-bold mb-1 md:mb-0 pr-4" for="name">
+            Table Name
+        </label>
+        <input class="appearance-none rounded-md w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:border focus:border-yellow-500" name="name" type="text" autofocus required autocomplete="off" placeholder="Trogdor">
+        {errors.name && <small class="text-red-500 text-xs italic">{errors.name}</small>}
+        <button class="btn mt-1 mx-auto">Create Table</button>
+  </form>
+</div>
