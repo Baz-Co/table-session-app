@@ -1,0 +1,31 @@
+---
+const { tableId } = Astro.params;
+const response = await fetch(`http:localhost:8001/item/${tableId}`).catch(
+  (err) => {
+    return {
+      json: () => {
+        return { id: 1, name: "Table 1", activeTime: null, activeUser: null };
+      },
+    };
+  }
+);
+const table = (await response.json()) || {
+  name: "Table not found",
+};
+if (!table.id) {
+  return Astro.redirect("/tables/notFound");
+}
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title={table.name}>
+  <!-- <div>{JSON.stringify(Astro.params)}</div> -->
+  <h1>{table.name}</h1>
+  <a href="/tables" class="a">Back to tables</a>
+</Layout>
+
+<style>
+  .a {
+    @apply underline text-blue-600 hover:text-blue-800 visited:text-purple-600;
+  }
+</style>

@@ -1,0 +1,30 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="Not Found.">
+  <div class="grid h-screen place-items-center">
+    <div>
+      <h1 class="text-3xl">Table not found.</h1>
+      <button
+        class="btn"
+        onclick="window.location.href = 'http://localhost:3000'"
+       >
+        Back to Tables
+      </button>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .btn {
+    @apply bg-blue-500 hover:bg-blue-700;
+    @apply rounded rounded-md;
+    border: none;
+    color: white;
+    padding: 0 1rem;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+</style>

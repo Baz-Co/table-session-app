@@ -1,15 +1,46 @@
 ---
+import Layout from '../layouts/Layout.astro'
+const response = await fetch('http:localhost:8001/items').catch((err) => {
+	// console.log(err)
+	// throw err
+	return { json: () => { return [{ id: 1, name: "Table 1", activeTime: null, activeUser: null },
+	{ id: 2, name: "Table 2", activeTime: null, activeUser: null },
+	{ id: 3, name: "Table 3", activeTime: null, activeUser: null },
+	{ id: 4, name: "Table 4", activeTime: null, activeUser: null },
+	{ id: 5, name: "Table 5", activeTime: null, activeUser: null },
+	{ id: 6, name: "Table 6", activeTime: null, activeUser: null },
+	{ id: 7, name: "Table 7", activeTime: null, activeUser: null },
+	{ id: 8, name: "Table 8", activeTime: null, activeUser: null },
+	{ id: 9, name: "Table 9", activeTime: null, activeUser: null },
+	{ id: 10, name: "Table 10", activeTime: null, activeUser: null },
+	{ id: 11, name: "Table 11", activeTime: null, activeUser: null },
+	{ id: 12, name: "Table 12", activeTime: null, activeUser: null },
+	{ id: 13, name: "Table 13", activeTime: null, activeUser: null },
+	{ id: 14, name: "Table 14", activeTime: null, activeUser: null },
+	{ id: 15, name: "Table 15", activeTime: null, activeUser: null },
+	{ id: 16, name: "Table 16", activeTime: null, activeUser: null },
+	{ id: 17, name: "Table 17", activeTime: null, activeUser: null },
+	{ id: 18, name: "Table 18", activeTime: null, activeUser: null }]} }
+})
+const tables = await response.json()
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="Table Session">
+	<div class="grid place-items-center h-screen max-w-screen-xl mx-auto">
+		<!-- <div>{JSON.stringify(data)}</div> -->
+		<div class="grid grid-cols-3 items-center w-full">
+			{
+				tables.map((table) => (
+					<a
+						class="border flex flex-col items-center justify-center m-1 rounded-md h-32"
+						href={`/tables/${table.id}`}
+					>
+						<span class="text-2xl">{table.name}</span>
+						<span class="text-2xl">{table.activeUser}</span>
+						<span class="text-2xl">{table.activeTime}</span>
+					</a>
+				))
+			}
+		</div>
+	</div>
+</Layout>
