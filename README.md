@@ -86,17 +86,17 @@ Inside of your Astro project, you'll see the following folders and files:
 │   │   └── login.astro
 │   └── styles/
 │       └── base.css
-└── package.json
-.env
-.gitignore
-astro.config.mjs
-auth.config.ts
-package-lock.json
-package.json
-postcss.config.cjs
-README.md
-tailwind.config.cjs
-tsconfig.json
+├── package.json
+├── .env
+├── .gitignore
+├── astro.config.mjs
+├── auth.config.ts
+├── package-lock.json
+├── package.json
+├── postcss.config.cjs
+├── README.md
+├── tailwind.config.cjs
+└── tsconfig.json
 ```
 </details>
 
