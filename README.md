@@ -3,6 +3,16 @@
 TSA allows users to sit and chat at a "table".
 Each "table" can be a game session or a general chat.
 
+Roadmap:
+- [x] View Static List of Tables
+- [x] Navigation from Tables view to individual Table view and back
+- [ ] Integrate Authentication
+- [ ] Integrate Persistent Data Storage
+- [ ] Create a new Table
+- [ ] Join an existing Table
+- [ ] Start a Table Session
+- [ ] End a Table Session
+
 <!-- [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=) -->
 
 <details>
