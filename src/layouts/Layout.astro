@@ -3,7 +3,7 @@ export interface Props {
   title: string;
 }
 
-import '../styles/base.css'
+import "../styles/base.css";
 
 const { title } = Astro.props;
 ---
@@ -18,8 +18,25 @@ const { title } = Astro.props;
     />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=REM"
+      rel="stylesheet"
+      type="text/css"
+    />
   </head>
   <body>
     <slot />
   </body>
 </html>
+
+<style>
+  body {
+    height: 100vh;
+    font-family: "REM", "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #000;
+    color: #fff;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='1440' height='250' preserveAspectRatio='none' viewBox='0 0 1440 250'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1051%26quot%3b)' fill='none'%3e%3crect width='1440' height='250' x='0' y='0' fill='rgba(0%2c 0%2c 0%2c 1)'%3e%3c/rect%3e%3cpath d='M24 250L274 0L566.5 0L316.5 250z' fill='url(%26quot%3b%23SvgjsLinearGradient1052%26quot%3b)'%3e%3c/path%3e%3cpath d='M253.60000000000002 250L503.6 0L820.1 0L570.1 250z' fill='url(%26quot%3b%23SvgjsLinearGradient1052%26quot%3b)'%3e%3c/path%3e%3cpath d='M503.20000000000005 250L753.2 0L852.2 0L602.2 250z' fill='url(%26quot%3b%23SvgjsLinearGradient1052%26quot%3b)'%3e%3c/path%3e%3cpath d='M721.8000000000001 250L971.8000000000001 0L1012.3000000000001 0L762.3000000000001 250z' fill='url(%26quot%3b%23SvgjsLinearGradient1052%26quot%3b)'%3e%3c/path%3e%3cpath d='M1421 250L1171 0L1022.5 0L1272.5 250z' fill='url(%26quot%3b%23SvgjsLinearGradient1053%26quot%3b)'%3e%3c/path%3e%3cpath d='M1160.4 250L910.4000000000001 0L574.4000000000001 0L824.4000000000001 250z' fill='url(%26quot%3b%23SvgjsLinearGradient1053%26quot%3b)'%3e%3c/path%3e%3cpath d='M963.8 250L713.8 0L578.8 0L828.8 250z' fill='url(%26quot%3b%23SvgjsLinearGradient1053%26quot%3b)'%3e%3c/path%3e%3cpath d='M701.1999999999999 250L451.19999999999993 0L194.69999999999993 0L444.69999999999993 250z' fill='url(%26quot%3b%23SvgjsLinearGradient1053%26quot%3b)'%3e%3c/path%3e%3cpath d='M1299.120100432666 250L1440 109.12010043266596L1440 250z' fill='url(%26quot%3b%23SvgjsLinearGradient1052%26quot%3b)'%3e%3c/path%3e%3cpath d='M0 250L140.87989956733404 250L 0 109.12010043266596z' fill='url(%26quot%3b%23SvgjsLinearGradient1053%26quot%3b)'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1051'%3e%3crect width='1440' height='250' fill='white'%3e%3c/rect%3e%3c/mask%3e%3clinearGradient x1='0%25' y1='100%25' x2='100%25' y2='0%25' id='SvgjsLinearGradient1052'%3e%3cstop stop-color='rgba(14%2c 51%2c 6%2c 0.42)' offset='0'%3e%3c/stop%3e%3cstop stop-opacity='0' stop-color='rgba(14%2c 51%2c 6%2c 0.42)' offset='0.66'%3e%3c/stop%3e%3c/linearGradient%3e%3clinearGradient x1='100%25' y1='100%25' x2='0%25' y2='0%25' id='SvgjsLinearGradient1053'%3e%3cstop stop-color='rgba(14%2c 51%2c 6%2c 0.42)' offset='0'%3e%3c/stop%3e%3cstop stop-opacity='0' stop-color='rgba(14%2c 51%2c 6%2c 0.42)' offset='0.66'%3e%3c/stop%3e%3c/linearGradient%3e%3c/defs%3e%3c/svg%3e");
+    background-position: bottom center;
+    background-repeat: no-repeat;
+  }
+</style>

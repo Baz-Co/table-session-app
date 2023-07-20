@@ -6,10 +6,10 @@ if (!session) return Astro.redirect("/login");
 const { tableId } = Astro.params;
 let table;
 try {
-  const tableFetch = await fetch(`http://localhost:8001/item/${tableId}`)
-  table = await tableFetch.json()
+  const tableFetch = await fetch(`http://localhost:8001/item/${tableId}`);
+  table = await tableFetch.json();
 } catch {
-  table = {}
+  table = {};
 }
 if (!table.id) {
   return Astro.redirect("/tables/notFound");
@@ -18,41 +18,37 @@ import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout title={table.name}>
-  <!-- <div>{JSON.stringify(Astro.params)}</div> -->
-  <!-- <button onclick="console.log(window.location.origin)">Console Log Var</button> -->
-  <h1 class="font-bold">{table.name}</h1>
-  <h2 class="my-2">{table.activeUser}</h2>
-  {
-    table.activeTime && (
-      <button
-        id="endSession"
-        class="btn bg-blue-100 border-blue-500 text-blue-500"
-      >
-        End Session
-      </button>
-    )
-  }
-  {
-    !table.activeTime && (
-      <button
-        id="startSession"
-        class="btn bg-blue-100 border-blue-500 text-blue-500"
-      >
-        Start Session
-      </button>
-    )
-  }
-  <br />
-  <button id="delete" class="btn bg-red-100 border-red-500 text-red-500 my-2"
-    >Delete Table</button
+  <div
+    class="grid place-items-center content-center h-screen max-w-screen-xl mx-auto"
   >
-  <br />
-  <a href="/tables" class="a">Back to tables</a>
+    <!-- <div>{JSON.stringify(Astro.params)}</div> -->
+    <!-- <button onclick="console.log(window.location.origin)">Console Log Var</button> -->
+    <h1 class="font-bold">{table.name}</h1>
+    <h2 class="my-2">{table.activeUser}</h2>
+    {
+      table.activeTime && (
+        <button id="endSession" class="btn btn-red">
+          End Session
+        </button>
+      )
+    }
+    {
+      !table.activeTime && (
+        <button id="startSession" class="btn btn-green">
+          Start Session
+        </button>
+      )
+    }
+    <br />
+    <button id="delete" class="text-red-900 my-2">Delete Table</button>
+    <br />
+    <a href="/tables" class="a">Back to tables</a>
+  </div>
 </Layout>
 
 <style>
   .a {
-    @apply underline text-blue-600 hover:text-blue-800 visited:text-purple-600;
+    @apply underline text-blue-600 hover:text-blue-800 visited:text-blue-600;
   }
 </style>
 
@@ -79,27 +75,27 @@ endSessionButton &&
         activeTime: null,
         activeUser: null,
       }),
-      }).then(() => {
-        window.location.href = window.location.href;
-      });
+    }).then(() => {
+      window.location.href = window.location.href;
     });
+  });
 </script>
 
 <script define:vars={{ tableId, session }}>
-  const startSessionButton = document.querySelector("#startSession");
-  startSessionButton &&
-    startSessionButton.addEventListener("click", () => {
-      fetch(`http://localhost:8001/item/${tableId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          activeTime: new Date(),
-          activeUser: session.user.email,
-        }),
-      }).then(() => {
-        window.location.href = window.location.href;
-      });
+const startSessionButton = document.querySelector("#startSession");
+startSessionButton &&
+  startSessionButton.addEventListener("click", () => {
+    fetch(`http://localhost:8001/item/${tableId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        activeTime: new Date(),
+        activeUser: session.user.email,
+      }),
+    }).then(() => {
+      window.location.href = window.location.href;
     });
+  });
 </script>

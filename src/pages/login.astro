@@ -1,15 +1,104 @@
 ---
-import { getSession } from 'auth-astro/server';
-let session = await getSession(Astro.request)
-if (session) return Astro.redirect("/profile")
+import { getSession } from "auth-astro/server";
+let session = await getSession(Astro.request);
+if (session) return Astro.redirect("/profile");
 
-import { SignIn } from 'auth-astro/components';
+import { SignIn } from "auth-astro/components";
 
-import Layout from '../layouts/Layout.astro'
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Table Session">
-	<div class="grid place-items-center h-screen max-w-screen-xl mx-auto">
-        <SignIn provider="github">Log In</SignIn>
-	</div>
+  <div
+    class="grid place-items-center content-center h-screen max-w-screen-xl mx-auto"
+  >
+    <SignIn class="text-7xl flicker plusate mb-12" provider="github">
+      ENTER
+    </SignIn>
+    <!-- <SignIn class="text-7xl flicker pulsate" provider="github">enter</SignIn> -->
+  </div>
 </Layout>
+<link
+  href="https://fonts.googleapis.com/css?family=Vibur:400"
+  rel="stylesheet"
+  type="text/css"
+/>
+<link
+  href="https://fonts.googleapis.com/css?family=Yellowtail:400"
+  rel="stylesheet"
+  type="text/css"
+/>
+<link
+  href="https://fonts.googleapis.com/css?family=Sacramento:400"
+  rel="stylesheet"
+  type="text/css"
+/>
+<link
+  href="https://fonts.googleapis.com/css?family=Gochi+Hand"
+  rel="stylesheet"
+  type="text/css"
+/>
+
+<style>
+  body {
+    background: #000;
+    font-family: "Gochi Hand", "Sacramento", "Yellowtail", "Vibur", sans-serif;
+    background-image: url("pool-hall.jpg");
+    background-attachment: fixed;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  .flicker {
+    /* animation: flicker 0.22s ease-in-out infinite alternate;   */
+    animation: flicker 0.22s 10 alternate;
+    color: #39ff14;
+    text-shadow: 0 0 4px #39ff14, 0 0 11px #39ff14, 0 0 19px #39ff14,
+      0 0 40px #049a5b, 0 0 80px #049a5b, 0 0 90px #049a5b, 0 0 100px #049a5b,
+      0 0 150px #049a5b;
+  }
+  .pulsate {
+    animation: pulsate 0.11s ease-in-out infinite alternate;
+    color: #39ff14;
+  }
+
+  @keyframes flicker {
+    0%,
+    18%,
+    22%,
+    25%,
+    53%,
+    57%,
+    100% {
+      text-shadow: 0 0 4px #39ff14, 0 0 11px #39ff14, 0 0 19px #39ff14,
+        0 0 40px #049a5b, 0 0 80px #049a5b, 0 0 90px #049a5b, 0 0 100px #049a5b,
+        0 0 150px #049a5b;
+    }
+
+    20%,
+    24%,
+    55% {
+      text-shadow: none;
+    }
+  }
+  @keyframes pulsate {
+    100% {
+      /* Larger blur radius */
+      text-shadow: 0 0 4px #39ff14, 0 0 11px #39ff14, 0 0 19px #39ff14,
+        0 0 40px #049a5b, 0 0 80px #049a5b, 0 0 90px #049a5b, 0 0 100px #049a5b,
+        0 0 150px #049a5b;
+    }
+    0% {
+      /* Smaller blur radius */
+      text-shadow: 0 0 4px #39ff14, 0 0 10px #39ff14, 0 0 18px #39ff14,
+        0 0 38px #049a5b, 0 0 73px #049a5b, 0 0 80px #049a5b, 0 0 94px #049a5b,
+        0 0 140px #049a5b;
+    }
+  }
+  @media screen and (prefers-reduced-motion) {
+    .pulsate,
+    .flicker {
+      animation: none;
+    }
+  }
+</style>
