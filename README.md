@@ -8,10 +8,10 @@ Roadmap:
 - [x] Navigation from Tables view to individual Table view and back
 - [x] Integrate Authentication
 - [ ] Integrate Persistent Data Storage
-- [ ] Create a new Table
+- [x] Create a new Table
 - [ ] Join an existing Table
-- [ ] Start a Table Session
-- [ ] End a Table Session
+- [x] Start a Table Session
+- [x] End a Table Session
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/Baz-Co/table-session-app)
 

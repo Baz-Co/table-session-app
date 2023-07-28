@@ -1,15 +1,15 @@
 ---
 import { getSession } from 'auth-astro/server';
 let session = await getSession(Astro.request)
-if (session) return Astro.redirect("/profile")
+if (!session) return Astro.redirect("/login")
 
-import { SignIn } from 'auth-astro/components';
+import { SignOut } from 'auth-astro/components';
 
 import Layout from '../layouts/Layout.astro'
 ---
 
 <Layout title="Table Session">
 	<div class="grid place-items-center h-screen max-w-screen-xl mx-auto">
-        <SignIn provider="github">Log In</SignIn>
+        <SignOut>Log Out</SignOut>
 	</div>
 </Layout>

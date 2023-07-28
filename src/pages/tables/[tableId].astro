@@ -1,17 +1,16 @@
 ---
+import { getSession } from "auth-astro/server";
+let session = await getSession(Astro.request);
+if (!session) return Astro.redirect("/login");
+
 const { tableId } = Astro.params;
-const response = await fetch(`http:localhost:8001/item/${tableId}`).catch(
-  (err) => {
-    return {
-      json: () => {
-        return { id: 1, name: "Table 1", activeTime: null, activeUser: null };
-      },
-    };
-  }
-);
-const table = (await response.json()) || {
-  name: "Table not found",
-};
+let table;
+try {
+  const tableFetch = await fetch(`http://localhost:8001/item/${tableId}`)
+  table = await tableFetch.json()
+} catch {
+  table = {}
+}
 if (!table.id) {
   return Astro.redirect("/tables/notFound");
 }
@@ -21,7 +20,33 @@ import Layout from "../../layouts/Layout.astro";
 <Layout title={table.name}>
   <!-- <div>{JSON.stringify(Astro.params)}</div> -->
   <!-- <button onclick="console.log(window.location.origin)">Console Log Var</button> -->
-  <h1>{table.name}</h1>
+  <h1 class="font-bold">{table.name}</h1>
+  <h2 class="my-2">{table.activeUser}</h2>
+  {
+    table.activeTime && (
+      <button
+        id="endSession"
+        class="btn bg-blue-100 border-blue-500 text-blue-500"
+      >
+        End Session
+      </button>
+    )
+  }
+  {
+    !table.activeTime && (
+      <button
+        id="startSession"
+        class="btn bg-blue-100 border-blue-500 text-blue-500"
+      >
+        Start Session
+      </button>
+    )
+  }
+  <br />
+  <button id="delete" class="btn bg-red-100 border-red-500 text-red-500 my-2"
+    >Delete Table</button
+  >
+  <br />
   <a href="/tables" class="a">Back to tables</a>
 </Layout>
 
@@ -30,3 +55,51 @@ import Layout from "../../layouts/Layout.astro";
     @apply underline text-blue-600 hover:text-blue-800 visited:text-purple-600;
   }
 </style>
+
+<script define:vars={{ tableId }}>
+const deleteButton = document.querySelector("#delete");
+deleteButton &&
+  deleteButton.addEventListener("click", () => {
+    fetch(`http://localhost:8001/item/${tableId}`, {
+      method: "DELETE",
+    }).then(() => {
+      window.location.href = "http://localhost:3000/tables";
+    });
+  });
+
+const endSessionButton = document.querySelector("#endSession");
+endSessionButton &&
+  endSessionButton.addEventListener("click", () => {
+    fetch(`http://localhost:8001/item/${tableId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        activeTime: null,
+        activeUser: null,
+      }),
+      }).then(() => {
+        window.location.href = window.location.href;
+      });
+    });
+</script>
+
+<script define:vars={{ tableId, session }}>
+  const startSessionButton = document.querySelector("#startSession");
+  startSessionButton &&
+    startSessionButton.addEventListener("click", () => {
+      fetch(`http://localhost:8001/item/${tableId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          activeTime: new Date(),
+          activeUser: session.user.email,
+        }),
+      }).then(() => {
+        window.location.href = window.location.href;
+      });
+    });
+</script>
