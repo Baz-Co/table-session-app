@@ -1,3 +1,11 @@
 .btn {
-    @apply py-1 px-4 rounded-md border;
+  @apply py-1 px-4 rounded-md border;
+}
+.btn-red {
+  color: #790710;
+  border: 1px solid #790710;
+}
+.btn-green {
+  color: #0a6c03;
+  border: 1px solid #0a6c03;
 }

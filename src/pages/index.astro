@@ -15,26 +15,27 @@ try {
   tables = await response.json();
 } catch (error) {
   console.error(error);
-  tables = [
-    { id: 1, name: "Table 1", activeTime: null, activeUser: null },
-    { id: 2, name: "Table 2", activeTime: null, activeUser: null },
-    { id: 3, name: "Table 3", activeTime: null, activeUser: null },
-    { id: 4, name: "Table 4", activeTime: null, activeUser: null },
-    { id: 5, name: "Table 5", activeTime: null, activeUser: null },
-    { id: 6, name: "Table 6", activeTime: null, activeUser: null },
-    { id: 7, name: "Table 7", activeTime: null, activeUser: null },
-    { id: 8, name: "Table 8", activeTime: null, activeUser: null },
-    { id: 9, name: "Table 9", activeTime: null, activeUser: null },
-    { id: 10, name: "Table 10", activeTime: null, activeUser: null },
-    { id: 11, name: "Table 11", activeTime: null, activeUser: null },
-    { id: 12, name: "Table 12", activeTime: null, activeUser: null },
-    { id: 13, name: "Table 13", activeTime: null, activeUser: null },
-    { id: 14, name: "Table 14", activeTime: null, activeUser: null },
-    { id: 15, name: "Table 15", activeTime: null, activeUser: null },
-    { id: 16, name: "Table 16", activeTime: null, activeUser: null },
-    { id: 17, name: "Table 17", activeTime: null, activeUser: null },
-    { id: 18, name: "Table 18", activeTime: null, activeUser: null },
-  ];
+  tables = [];
+  // tables = [
+  //   { id: 1, name: "Table 1", activeTime: null, activeUser: null },
+  //   { id: 2, name: "Table 2", activeTime: null, activeUser: null },
+  //   { id: 3, name: "Table 3", activeTime: null, activeUser: null },
+  //   { id: 4, name: "Table 4", activeTime: null, activeUser: null },
+  //   { id: 5, name: "Table 5", activeTime: null, activeUser: null },
+  //   { id: 6, name: "Table 6", activeTime: null, activeUser: null },
+  //   { id: 7, name: "Table 7", activeTime: null, activeUser: null },
+  //   { id: 8, name: "Table 8", activeTime: null, activeUser: null },
+  //   { id: 9, name: "Table 9", activeTime: null, activeUser: null },
+  //   { id: 10, name: "Table 10", activeTime: null, activeUser: null },
+  //   { id: 11, name: "Table 11", activeTime: null, activeUser: null },
+  //   { id: 12, name: "Table 12", activeTime: null, activeUser: null },
+  //   { id: 13, name: "Table 13", activeTime: null, activeUser: null },
+  //   { id: 14, name: "Table 14", activeTime: null, activeUser: null },
+  //   { id: 15, name: "Table 15", activeTime: null, activeUser: null },
+  //   { id: 16, name: "Table 16", activeTime: null, activeUser: null },
+  //   { id: 17, name: "Table 17", activeTime: null, activeUser: null },
+  //   { id: 18, name: "Table 18", activeTime: null, activeUser: null },
+  // ];
 }
 ---
 
@@ -42,24 +43,56 @@ try {
   <div class="grid place-items-center h-screen max-w-screen-xl mx-auto">
     <!-- <div>{JSON.stringify(data)}</div> -->
     {tables.length === 0 && <CreateTable />}
-    <div class="grid grid-cols-3 items-center w-full">
+    <div class="grid md:grid-cols-3 md:items-center p-1 w-full">
       {
         tables.map((table) => {
           const activeTime = table.activeTime
             ? new Date(table.activeTime)
             : null;
           return (
-            <a
-              class="border flex flex-col items-center justify-center m-1 rounded-md h-32"
-              href={`/tables/${table.id}`}
+            <div
+              class={table.activeUser ? `table table-red` : "table table-green"}
             >
-              <span class="text-2xl">{table.name}</span>
-              <span class="text-2xl">{table.activeUser}</span>
-              <span class="text-2xl">{activeTime?.toLocaleString()}</span>
-            </a>
+              <a
+                class="border flex flex-col items-center justify-center m-1 rounded-md h-32"
+                href={`/tables/${table.id}`}
+                style={`border-color: ${
+                  table.activeUser ? "#790710" : "#0a6c03"
+                };`}
+              >
+                <span class="text-2xl">{table.name}</span>
+                <span class="text-md">{table.activeUser}</span>
+                <span class="text-md">{activeTime?.toLocaleString()}</span>
+              </a>
+            </div>
           );
         })
       }
     </div>
   </div>
 </Layout>
+
+<style>
+  .table {
+    @apply border rounded-md h-32;
+    font-size: 1rem;
+    margin: 4px;
+  }
+  .table-green {
+    @apply border rounded-md;
+    font-size: 1rem;
+    margin: 4px;
+    color: #22c55e;
+    border-color: #0a6c03;
+    box-shadow: 0 0 0.2rem #fff, 0 0 2rem #0a6c03, 0 0 0.8rem #0a6c03,
+      inset 0 0 1.3rem #0a6c03;
+  }
+  .table-red {
+    @apply border rounded-md h-32;
+    font-size: 1rem;
+    margin: 4px;
+    color: #790710;
+    border-color: #790710;
+    box-shadow: inset 0 0 1.3rem #790710;
+  }
+</style>
